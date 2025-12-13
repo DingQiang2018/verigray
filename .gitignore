@@ -1,0 +1,14 @@
+*.jsonl
+**/__pycache__/
+**/.vscode/
+wandb/
+outputs/
+log.txt
+figs/
+rag_corpus/
+rag_corpus/*
+merged_model/
+temp*.py
+datasets_cache/
+output/
+nq_random100_seed42_hidden_states_qwen2_7b_chat/
