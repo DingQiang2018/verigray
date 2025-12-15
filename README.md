@@ -1,11 +1,11 @@
 # VeriGray
 
-VeriGray is an unfaithfulness detection dataset that has addressed the annotation ambiguity induced by the external world knowledge and linguistic ambiguity. See [our paper](https://arxiv.org/pdf/2510.21118) for more details. This repository provides the scripts to reproduce the experimental results in the paper.
+VeriGray is an unfaithfulness detection dataset that addresses the annotation ambiguity induced by external world knowledge and linguistic ambiguity. See [our paper](https://arxiv.org/pdf/2510.21118) for more details. This repository provides the scripts to reproduce the experimental results in the paper.
 
 
 ## Requirements
 
-Since our repository assemblies a bunch of baselines, which require diverse environments, we do not make out a unified environment requirements. Instead, we recommend using different environments for different baselines.
+Since our repository assembles a variety of baselines, which require diverse environments, we do not make out a unified environment requirements. Instead, we recommend using different environments for different baselines.
 
 Basic requirements (for zero_shot, lynx, and anahv2):
 ```
@@ -42,9 +42,10 @@ transformers==4.57.1
 
 ## Usage
 
+For zero_shot, verify_with_rag, minicheck, infuse, and ccp, run the following command directly.
 ```
 OPENROUTER_API_KEY=<your openrouter api key> python test.py \
-    --method <method> \  # choices: zero_shot, lynx, anahv2, minicheck, infuse, ccp, redeep, verify_with_rag, llm_check
+    --method <method> \  # choices: zero_shot, verify_with_rag, minicheck, infuse, ccp, lynx, anahv2, redeep, llm_check
     --overwrite \  # store_true: whether overwrite the cached results
     --data-file <data_file> \  # the file of data to evaluate
     --cache-file <cache_file> \ # the file of the cached results
@@ -55,3 +56,14 @@ OPENROUTER_API_KEY=<your openrouter api key> python test.py \
     --uncertainty-thresh <a float>  # only used for ccp, llm-check, and redeep
     --fine-grained-annotation  # store_true: set to True for zero_shot and verify_with_rag only
 ```
+
+For lynx and anahv2, 
+
+1. Deploy a local openai service of lynx/anahv2 using vllm;
+2. Run `test.py` (the command above).
+
+For redeep and llm_check, 
+
+1. Use `data_to_redeep.py` and `data_to_fava_annotated.py` to convert the data into the format that can be processed by the official implementation of ReDEeP and LLM-Check;
+2. Use `data_from_redeep.py` and `data_from_fava_annotated.py` to convert the results back to our format;
+3. Run the `test.py` with `--cache-file` assigned to the results file.
